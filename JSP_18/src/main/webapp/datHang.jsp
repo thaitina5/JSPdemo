@@ -10,11 +10,17 @@
 	<%
 		String email = request.getParameter("inputEmail");
 		String pass = request.getParameter("inputPassword");
-		String check = request.getParameter("inputCheck");
+		String sAmount = request.getParameter("amount");
+		int amount = 0;
+		try{
+			amount = Integer.parseInt(sAmount);	
+		}catch(Exception e){
+			
+		}
 	%>
-	Welcome User: <%= email %> <br>
-	Password: <%= pass %> <br>
-	Status: <%= check %> <br>
-	login success! 
+	Thank you User: <b><%= email %></b><br>
+	Password: <b><%= pass %></b><br>
+	Have order: <b><%= amount %></b> product<br>
+	Total price: <b><%= amount*100 %></b> 
 </body>
 </html>
