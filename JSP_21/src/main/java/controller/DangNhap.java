@@ -41,6 +41,8 @@ public class DangNhap extends HttpServlet {
 			url="/error.jsp";
 		}
 		
+		request.setAttribute("thongBao", "Đăng nhập thất bại do sai password hoặc username");
+		
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
 		rd.forward(request, response);
 	}

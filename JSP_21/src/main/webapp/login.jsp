@@ -8,6 +8,13 @@
 <title>LOGIN</title>
 </head>
 <body>
+	<%
+		Object obj_thongBao = request.getAttribute("thongBao");
+		String thongBao = "";
+		if(obj_thongBao != null){
+			thongBao += obj_thongBao.toString();
+		}
+	%>
 	<div class="container">
 		<h1>LOGIN</h1>
 		<form action="dang-nhap" method="POST">
@@ -24,6 +31,7 @@
 			<button type="submit" class="btn btn-primary">Login</button>
 		</form>
 	</div>
+	<%=thongBao %>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
