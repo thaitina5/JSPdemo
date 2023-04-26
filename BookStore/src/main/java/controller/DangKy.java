@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.KhachHangDAO;
 import model.KhachHang;
+import util.MaHoa;
 
 /**
  * Servlet implementation class DangKy
@@ -65,6 +66,8 @@ public class DangKy extends HttpServlet {
 		}
 		if(!matKhau.equals(matKhauNhapLai)) {
 			baoLoi += "Mật khẩu ko trùng khớp";
+		}else {
+			matKhau = MaHoa.toSHA1(matKhau);
 		}
 		
 		

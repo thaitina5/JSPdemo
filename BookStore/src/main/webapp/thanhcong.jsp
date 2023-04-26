@@ -8,5 +8,10 @@
 </head>
 <body>
 	<h1>DANG KY THANH CONG</h1>
+	<script>
+		setTimeout(() => {
+			window.location.href = "index.jsp";
+		}, 5000);
+	</script>
 </body>
 </html>
