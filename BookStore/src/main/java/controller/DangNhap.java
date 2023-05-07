@@ -58,7 +58,7 @@ public class DangNhap extends HttpServlet {
 			session.setAttribute("khachhang", khachhang);
 			url="/index.jsp";
 		}else {
-			request.setAttribute("baoLoi", "Ten tai khoan hoac mat khau sai!");
+			request.setAttribute("baoLoi", "Tên tài khoản hoặc mật khẩu sai!");
 			url = "/dangnhap.jsp";
 		}
 		
