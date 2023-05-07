@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Thanh cong</title>
+<title>That bai</title>
 </head>
 <body>
-	<h1>THAO TÁC THÀNH CÔNG</h1>
+	<h1>THAO TÁC KHÔNG THÀNH CÔNG</h1>
 	<script>
 		setTimeout(() => {
-			window.location.href = "index.jsp";
+			window.location.href = "doimatkhau.jsp";
 		}, 3000);
 	</script>
 </body>
