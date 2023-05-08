@@ -58,7 +58,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 			String sql = "select * from khachhang where makhachhang=?;";
 
 			PreparedStatement pst = conn.prepareStatement(sql);
-			pst.setString(1, t.getMaKhacHang());
+			pst.setString(1, t.getMaKhachHang());
 
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
@@ -133,7 +133,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 			String sql = "insert into khachhang values(?,?,?,?,?,?,?,?,?,?,?,?);";
 
 			PreparedStatement pst = conn.prepareStatement(sql);
-			pst.setString(1, t.getMaKhacHang());
+			pst.setString(1, t.getMaKhachHang());
 			pst.setString(2, t.getTenDangNhap());
 			pst.setString(3, t.getMatKhau());
 			pst.setString(4, t.getHoVaTen());
@@ -176,7 +176,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 			String sql = "delete from khachhang where makhachhang=?;";
 
 			PreparedStatement pst = conn.prepareStatement(sql);
-			pst.setString(1, t.getMaKhacHang());
+			pst.setString(1, t.getMaKhachHang());
 
 			ketQua = pst.executeUpdate();
 
@@ -205,23 +205,56 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 
 		try {
 			Connection conn = JDBCUtil.getConnection();
-			String sql = "update khachhang " + " set " + " tendangnhap=?" + ", matkhau=?" + ", hoten=?" + ", gioitinh=?"
+			String sql = "update khachhang " + " set " + " tendangnhap=?" + ", matkhau=?" + ", hovaten=?" + ", gioitinh=?"
 					+ ", diachi=?" + ", diachinhanhang=?" + ", diachimuahang=?" + ", ngaysinh=?" + ", sodienthoai=?"
-					+ ", email=?" + ", dangkinhanbangtin=?" + " WHERE makhachhang=?";
+					+ ", email=?" + ", dangkynhanbangtin=?" + " WHERE makhachhang=?";
 
 			PreparedStatement pst = conn.prepareStatement(sql);
-			pst.setString(1, t.getMaKhacHang());
-			pst.setString(2, t.getTenDangNhap());
-			pst.setString(3, t.getMatKhau());
-			pst.setString(4, t.getHoVaTen());
-			pst.setString(5, t.getGioiTinh());
-			pst.setString(6, t.getDiaChi());
-			pst.setString(7, t.getDiaChiNhanHang());
-			pst.setString(8, t.getDiaChiMuaHang());
-			pst.setDate(9, t.getNgaySinh());
-			pst.setString(10, t.getSoDienThoai());
-			pst.setString(11, t.getEmail());
-			pst.setBoolean(12, t.isDangKyNhanBangTin());
+			pst.setString(1, t.getTenDangNhap());
+			pst.setString(2, t.getMatKhau());
+			pst.setString(3, t.getHoVaTen());
+			pst.setString(4, t.getGioiTinh());
+			pst.setString(5, t.getDiaChi());
+			pst.setString(6, t.getDiaChiNhanHang());
+			pst.setString(7, t.getDiaChiMuaHang());
+			pst.setDate(8, t.getNgaySinh());
+			pst.setString(9, t.getSoDienThoai());
+			pst.setString(10, t.getEmail());
+			pst.setBoolean(11, t.isDangKyNhanBangTin());
+			pst.setString(12, t.getMaKhachHang());
+
+			ketQua = pst.executeUpdate();
+
+			System.out.println(sql);
+			System.out.println("Co " + ketQua + " dong bi thay doi");
+			JDBCUtil.closeConnection(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ketQua;
+	}
+	
+	public int updateInfo(KhachHang t) {
+		int ketQua = 0;
+
+		try {
+			Connection conn = JDBCUtil.getConnection();
+			String sql = "update khachhang " + " set " + " hovaten=?" + ", gioitinh=?"
+					+ ", diachi=?" + ", diachinhanhang=?" + ", diachimuahang=?" + ", ngaysinh=?" + ", sodienthoai=?"
+					+ ", email=?" + ", dangkynhanbangtin=?" + " WHERE makhachhang=?;";
+
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setString(1, t.getHoVaTen());
+			pst.setString(2, t.getGioiTinh());
+			pst.setString(3, t.getDiaChi());
+			pst.setString(4, t.getDiaChiNhanHang());
+			pst.setString(5, t.getDiaChiMuaHang());
+			pst.setDate(6, t.getNgaySinh());
+			pst.setString(7, t.getSoDienThoai());
+			pst.setString(8, t.getEmail());
+			pst.setBoolean(9, t.isDangKyNhanBangTin());
+			pst.setString(10, t.getMaKhachHang());
 
 			ketQua = pst.executeUpdate();
 
@@ -267,7 +300,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 
 			PreparedStatement pst = conn.prepareStatement(sql);
 			pst.setString(1, t.getMatKhau());
-			pst.setString(2, t.getMaKhacHang());
+			pst.setString(2, t.getMaKhachHang());
 
 			ketQua = pst.executeUpdate();
 
