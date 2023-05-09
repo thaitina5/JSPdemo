@@ -60,7 +60,8 @@
 		<div class="red" id="baoLoi">
 			<%=baoLoi%>
 		</div>
-		<form class="form" action="thay-doi-thong-tin" method="post">
+		<form class="form" action="../khach-hang" method="post">
+			<input type="hidden" name="hanhdong" value="thay-doi-thong-tin"/>
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="mb-3">

@@ -31,7 +31,8 @@
 </head>
 <body>
 	<main class="form-signin w-100 m-auto">
-		<form class="text-center" action="dang-nhap" method="POST">
+		<form class="text-center" action="../khach-hang" method="POST">
+			<input type="hidden" name="hanhdong" value="dang-nhap"/>
 			<h1 class="h3 mb-3 fw-normal">ĐĂNG NHẬP</h1>
 			<%
 				String baoLoi = request.getAttribute("baoLoi")+"";
