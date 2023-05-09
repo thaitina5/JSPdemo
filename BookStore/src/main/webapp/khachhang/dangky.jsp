@@ -69,7 +69,8 @@
 		<div class="red" id="baoLoi">
 			<%=baoLoi%>
 		</div>
-		<form class="form" action="dang-ky" method="post">
+		<form class="form" action="../khach-hang" method="post">
+			<input type="hidden" name="hanhdong" value="dang-ky"/>
 			<div class="row">
 				<div class="col-sm-6">
 					<h3>Tài khoản</h3>

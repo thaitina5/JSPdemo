@@ -14,6 +14,9 @@
 </head>
 <body>
 	<%
+		String baoLoi = request.getAttribute("baoLoi") + "";
+		baoLoi = baoLoi.equals("null") ? "" : baoLoi;
+		
 		Object obj = session.getAttribute("khachhang");
 		KhachHang khachHang = null;
 		if (obj!=null){
@@ -26,14 +29,11 @@
 	
 	<div class="mainDiv">
 		<div class="cardStyle">
-			<form action="doi-mat-khau" method="post" name="signupForm"
+			<form action="../khach-hang" method="post" name="signupForm"
 				id="signupForm">
-
+				<input type="hidden" name="hanhdong" value="doi-mat-khau"/>
+				
 				<h2 class="formTitle">Đổi mật khẩu</h2>
-				<%
-					String baoLoi = request.getAttribute("baoLoi") + "";
-					baoLoi = baoLoi.equals("null") ? "" : baoLoi;
-				%>
 				<div style="text-align:center"><span class="red"><%=baoLoi %></span></div>
 				<div class="inputDiv">
 					<label class="inputLabel" for="password">Mật khẩu hiện tại <span class="red">*</span></label>
