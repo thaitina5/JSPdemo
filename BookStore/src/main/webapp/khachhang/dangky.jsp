@@ -26,6 +26,7 @@
 	</style>
 </head>
 <body>
+	<jsp:include page="../header.jsp" />
 	<%
 		String baoLoi = request.getAttribute("baoLoi")+"";
 		baoLoi = (baoLoi.equals("null"))?"":baoLoi;
@@ -61,6 +62,7 @@
 		String dongYNhanMail= request.getAttribute("dongYNhanMail")+"";
 		dongYNhanMail = (dongYNhanMail.equals("null"))?"":dongYNhanMail;
 	%>
+	
 	<div class="container">
 		<div class="text-center">
 			<h1>ĐĂNG KÝ TÀI KHOẢN</h1>
@@ -166,6 +168,7 @@
 			</div>
 		</form>
 	</div>
+	<%@include file="../footer.jsp" %> 
 	
 	<script>
 		function kiemTraMatKhau(){

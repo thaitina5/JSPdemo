@@ -27,6 +27,7 @@
 	</style>
 </head>
 <body>
+	<jsp:include page="../header.jsp" />
 	<%
 		String baoLoi = request.getAttribute("baoLoi")+"";
 		baoLoi = (baoLoi.equals("null"))?"":baoLoi;
@@ -128,5 +129,7 @@
 		</form>
 	</div>
 	<% } %>
+	
+	<%@include file="../footer.jsp" %>
 </body>
 </html>
