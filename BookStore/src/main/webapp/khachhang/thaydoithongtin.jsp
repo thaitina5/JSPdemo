@@ -53,6 +53,10 @@
 		String email = khachHang.getEmail();
 		boolean dongYNhanMail = khachHang.isDangKyNhanBangTin();
 	%>
+	<%
+		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath();
+	%>
 	<div class="container">
 		<div class="text-center">
 			<h1>THÔNG TIN TÀI KHOẢN</h1>
@@ -61,7 +65,7 @@
 		<div class="red" id="baoLoi">
 			<%=baoLoi%>
 		</div>
-		<form class="form" action="../khach-hang" method="post">
+		<form class="form" action="<%=url%>/khach-hang" method="post">
 			<input type="hidden" name="hanhdong" value="thay-doi-thong-tin"/>
 			<div class="row">
 				<div class="col-sm-6">
