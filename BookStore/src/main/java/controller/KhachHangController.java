@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
@@ -14,7 +15,9 @@ import javax.servlet.http.HttpSession;
 
 import database.KhachHangDAO;
 import model.KhachHang;
+import util.Email;
 import util.MaHoa;
+import util.SoNgauNhien;
 
 /**
  * Servlet implementation class KhachHangController
@@ -46,6 +49,8 @@ public class KhachHangController extends HttpServlet {
 			doiMatKhau(request, response);
 		}else if(hanhdong.equals("thay-doi-thong-tin")) {
 			thayDoiThongTin(request, response);			
+		}else if(hanhdong.equals("xac-thuc-tai-khoan")) {
+			xacThucTaiKhoan(request, response);			
 		}
 	}
 
@@ -79,6 +84,7 @@ public class KhachHangController extends HttpServlet {
 			request.setAttribute("diaChiMuaHang", diaChiMuaHang);
 			request.setAttribute("diaChiNhanHang", diaChiNhanHang);
 			request.setAttribute("dienThoai", dienThoai);
+			request.setAttribute("email", email);
 			request.setAttribute("dongYNhanMail", dongYNhanMail);
 			
 			
@@ -95,6 +101,7 @@ public class KhachHangController extends HttpServlet {
 				matKhau = MaHoa.toSHA1(matKhau);
 			}
 			
+			request.setAttribute("baoLoi", baoLoi);
 			
 			if(baoLoi.length()>0) {
 				url = "/khachhang/dangky.jsp";
@@ -102,7 +109,25 @@ public class KhachHangController extends HttpServlet {
 				Random rd = new Random();
 				String maKhachHang = System.currentTimeMillis() + rd.nextInt(1000) +"";
 				KhachHang kh = new KhachHang(maKhachHang, tenDangNhap, matKhau, hoVaTen, gioiTinh, diaChiKhachHang, diaChiNhanHang, diaChiMuaHang, Date.valueOf(ngaySinh), dienThoai, email, dongYNhanMail!=null);
-				khDAO.insert(kh);
+				if(khDAO.insert(kh)>0) {
+					String soNgauNhien = SoNgauNhien.getSoNgauNhien();
+					
+					Date todayDates = new Date(new java.util.Date().getTime());
+					Calendar c = Calendar.getInstance();
+					c.setTime(todayDates);
+					c.add(Calendar.DATE, 1);
+					Date thoiGianHieuLucXacThuc = new Date(c.getTimeInMillis());
+					
+					boolean trangThaiXacThuc = false;
+					kh.setMaXacThuc(soNgauNhien);
+					kh.setThoiGianHieuLucMaXacThuc(thoiGianHieuLucXacThuc);
+					kh.setTrangThaiXacThuc(trangThaiXacThuc);
+					
+					if(khDAO.updateVerifyAccount(kh)>0) {
+						Email.sendEmail(kh.getEmail(), "Xác thực tài khoản", getNoiDung(kh));
+					};
+					
+				}
 				url = "/khachhang/thanhcong.jsp";
 			}
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
@@ -112,6 +137,16 @@ public class KhachHangController extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static String getNoiDung(KhachHang kh) {
+		String link = "http://localhost:8080/BookStore/khach-hang?hanhdong=xac-thuc-tai-khoan&maKhachHang="+kh.getMaKhachHang()+"&maXacThuc="+kh.getMaXacThuc();
+		String noiDung = "<p>Xin ch&agrave;o bạn <strong>"+kh.getHoVaTen()+"</strong>,</p>\r\n"
+				+ "<p>Vui l&ograve;ng x&aacute;c thực t&agrave;i khoản của bạn bằng c&aacute;ch nhập m&atilde; <strong>"+kh.getMaXacThuc()+"</strong>, hoặc click trực tiếp v&agrave;o đường link sau đ&acirc;y:</p>\r\n"
+				+ "<p><a href=\""+link+"\">"+link+"</a></p>\r\n"
+				+ "<p>Đ&acirc;y l&agrave; email tự động, vui l&ograve;ng kh&ocirc;ng phản hồi email n&agrave;y.</p>\r\n"
+				+ "<p>Tr&acirc;n trọng cảm ơn.</p>";
+		return noiDung;
 	}
 
 	private void dangNhap(HttpServletRequest request, HttpServletResponse response) {
@@ -257,6 +292,40 @@ public class KhachHangController extends HttpServlet {
 					}	
 				}
 			}
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
+			rd.forward(request, response);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void xacThucTaiKhoan(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			String maKhachHang = request.getParameter("maKhachHang");
+			String maXacThuc = request.getParameter("maXacThuc");
+			
+			String msg = "";
+			
+			KhachHangDAO khd = new KhachHangDAO();
+			KhachHang kh = new KhachHang();
+			kh.setMaKhachHang(maKhachHang);
+			KhachHang khachHang = khd.selectById(kh);
+
+			if (khachHang != null) {
+				if(khachHang.getMaXacThuc().equals(maXacThuc)) {
+					khachHang.setTrangThaiXacThuc(true);
+					khd.updateVerifyAccount(khachHang);
+					 msg = "Xác thực thành công";
+				}else {
+					 msg = "Xác thực ko thành công";
+				}
+			}else {
+				 msg = "Tài khoản ko tồn tại";
+			}
+			String url = "/khachhang/thongbao.jsp";
+			request.setAttribute("baoLoi", msg);
 			RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
 			rd.forward(request, response);
 		} catch (ServletException e) {

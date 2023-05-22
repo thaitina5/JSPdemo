@@ -31,7 +31,7 @@
 </head>
 <body>
 	<main class="form-signin w-100 m-auto">
-		<form class="text-center" action="../khach-hang" method="POST">
+		<form class="text-center" action="<%=url%>/khach-hang" method="POST">
 			<input type="hidden" name="hanhdong" value="dang-nhap"/>
 			<h1 class="h3 mb-3 fw-normal">ĐĂNG NHẬP</h1>
 			<%
@@ -55,7 +55,7 @@
 			<button class="w-100 btn btn-lg btn-primary" type="submit">Đăng nhập</button>
 			<p>
 				Chưa có tài khoản? 
-				<a href="dangky.jsp">Đăng ký tài khoản mới</a>
+				<a href="<%=url%>/khachhang/dangky.jsp">Đăng ký tài khoản mới</a>
 			</p>
 			<p class="mt-5 mb-3 text-muted">&copy; 2017–2025</p>
 		</form>

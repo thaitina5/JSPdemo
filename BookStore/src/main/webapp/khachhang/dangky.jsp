@@ -62,6 +62,10 @@
 		String dongYNhanMail= request.getAttribute("dongYNhanMail")+"";
 		dongYNhanMail = (dongYNhanMail.equals("null"))?"":dongYNhanMail;
 	%>
+	<%
+		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath();
+	%>
 	
 	<div class="container">
 		<div class="text-center">
@@ -71,7 +75,7 @@
 		<div class="red" id="baoLoi">
 			<%=baoLoi%>
 		</div>
-		<form class="form" action="../khach-hang" method="post">
+		<form class="form" action="<%=url%>/khach-hang" method="post">
 			<input type="hidden" name="hanhdong" value="dang-ky"/>
 			<div class="row">
 				<div class="col-sm-6">

@@ -50,7 +50,7 @@ String url = request.getScheme() + "://" + request.getServerName() + ":" + reque
 				if (khachhang == null) {
 				%>
 				<a class="btn btn-primary" style="white-space: nowrap;"
-					href="khachhang/dangnhap.jsp"> Đăng nhập </a>
+					href="<%=url%>/khachhang/dangnhap.jsp"> Đăng nhập </a>
 				<%
 				} else {
 				%>
@@ -66,7 +66,7 @@ String url = request.getScheme() + "://" + request.getServerName() + ":" + reque
 							<li><a class="dropdown-item" href="<%=url%>/khachhang/thaydoithongtin.jsp">Thay đổi thông tin</a></li>
 							<li><a class="dropdown-item" href="<%=url%>/khachhang/doimatkhau.jsp">Đổi mật khẩu</a></li>
 							<li class="dropdown-divider"></li>
-							<li><a class="dropdown-item" href="khach-hang?hanhdong=dang-xuat">Thoát</a></li>
+							<li><a class="dropdown-item" href="<%=url%>/khach-hang?hanhdong=dang-xuat">Thoát</a></li>
 						</ul>
 					</li>
 				</ul>

@@ -74,9 +74,12 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 				String soDienThoai = rs.getString("sodienthoai");
 				String email = rs.getString("email");
 				boolean dangKyNhanBangTin = rs.getBoolean("dangkynhanbangtin");
+				String maXacThuc = rs.getString("maxacthuc");
+				Date thoiGianHieuLucMaXacThuc = rs.getDate("thoigianhieulucmaxacthuc");
+				boolean trangThaiXacThuc = rs.getBoolean("trangthaixacthuc");
 
 				ketQua = new KhachHang(maKhachHang, tenDangNhap, matKhau, hoVaTen, gioiTinh, diaChi, diaChiMuaHang,
-						diaChiNhanHang, ngaySinh, soDienThoai, email, dangKyNhanBangTin);
+						diaChiNhanHang, ngaySinh, soDienThoai, email, dangKyNhanBangTin, maXacThuc, thoiGianHieuLucMaXacThuc, trangThaiXacThuc);
 			}
 			System.out.println(sql);
 			JDBCUtil.closeConnection(conn);
@@ -111,9 +114,12 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 				String soDienThoai = rs.getString("sodienthoai");
 				String email = rs.getString("email");
 				boolean dangKyNhanBangTin = rs.getBoolean("dangkynhanbangtin");
+				String maXacThuc = rs.getString("maxacthuc");
+				Date thoiGianHieuLucMaXacThuc = rs.getDate("thoigianhieulucmaxacthuc");
+				boolean trangThaiXacThuc = rs.getBoolean("trangthaixacthuc");
 
 				ketQua = new KhachHang(maKhachHang, tenDangNhap, matKhau, hoVaTen, gioiTinh, diaChi, diaChiMuaHang,
-						diaChiNhanHang, ngaySinh, soDienThoai, email, dangKyNhanBangTin);
+						diaChiNhanHang, ngaySinh, soDienThoai, email, dangKyNhanBangTin, maXacThuc, thoiGianHieuLucMaXacThuc, trangThaiXacThuc);
 			}
 			System.out.println(sql);
 			JDBCUtil.closeConnection(conn);
@@ -130,7 +136,7 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 
 		try {
 			Connection conn = JDBCUtil.getConnection();
-			String sql = "insert into khachhang values(?,?,?,?,?,?,?,?,?,?,?,?);";
+			String sql = "insert into khachhang values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
 			PreparedStatement pst = conn.prepareStatement(sql);
 			pst.setString(1, t.getMaKhachHang());
@@ -145,6 +151,9 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 			pst.setString(10, t.getSoDienThoai());
 			pst.setString(11, t.getEmail());
 			pst.setBoolean(12, t.isDangKyNhanBangTin());
+			pst.setString(13, null);
+			pst.setDate(14, null);
+			pst.setBoolean(15, false);
 
 			ketQua = pst.executeUpdate();
 
@@ -255,6 +264,32 @@ public class KhachHangDAO implements DAOInterface<KhachHang> {
 			pst.setString(8, t.getEmail());
 			pst.setBoolean(9, t.isDangKyNhanBangTin());
 			pst.setString(10, t.getMaKhachHang());
+
+			ketQua = pst.executeUpdate();
+
+			System.out.println(sql);
+			System.out.println("Co " + ketQua + " dong bi thay doi");
+			JDBCUtil.closeConnection(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return ketQua;
+	}
+	
+	public int updateVerifyAccount(KhachHang t) {
+		int ketQua = 0;
+
+		try {
+			Connection conn = JDBCUtil.getConnection();
+			String sql = "update khachhang " + " set " + " maxacthuc=?" + ", thoigianhieulucmaxacthuc=?" + ", trangthaixacthuc=?"
+					+ " WHERE makhachhang=?";
+
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setString(1, t.getMaXacThuc());
+			pst.setDate(2, t.getThoiGianHieuLucMaXacThuc());
+			pst.setBoolean(3, t.isTrangThaiXacThuc());
+			pst.setString(4, t.getMaKhachHang());
 
 			ketQua = pst.executeUpdate();
 

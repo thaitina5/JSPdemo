@@ -16,7 +16,7 @@
 	<link href="<%=url%>/css/doimatkhau.css" rel="stylesheet">
 </head>
 <body>
-	<jsp:include page="../header.jsp" />
+	<jsp:include page="<%=url%>/header.jsp" />
 	<%
 		String baoLoi = request.getAttribute("baoLoi") + "";
 		baoLoi = baoLoi.equals("null") ? "" : baoLoi;
