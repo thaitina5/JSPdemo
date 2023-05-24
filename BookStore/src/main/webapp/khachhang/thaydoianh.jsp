@@ -24,7 +24,14 @@
 			color: red;
 		}
 		
-	</style>
+		.avatar {
+			vertical-align: middle;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			object-fit:cover;
+		}
+</style>
 </head>
 <body>
 	<jsp:include page="../header.jsp" />
@@ -61,7 +68,7 @@
 			<input type="hidden" name="hanhdong" value="thay-doi-anh"/>
 			<div class="row justify-content-center">
 				<div class="col-sm-6">
-					<img alt="Ảnh avatar" src="<%=url%>/avatar/<%=duongDanAnh%>" />
+					<img class="avatar" alt="Ảnh avatar" src="<%=url%>/avatar/<%=duongDanAnh%>" />
 					<div class="mb-3">
 						<label for="duongdananh" class="form-label">Đường dẫn ảnh</label> 
 						<input type="file" class="form-control" id="duongdananh" name="duongdananh">
