@@ -9,4 +9,10 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  
+  <context-param>
+  	<description>Luu tru file avatar cua khach</description>
+  	<param-name>avatar</param-name>
+  	<param-value>/khachhang/avatar</param-value>
+  </context-param>
 </web-app>

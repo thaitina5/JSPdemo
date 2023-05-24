@@ -1,8 +1,10 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import database.KhachHangDAO;
 import model.KhachHang;
@@ -51,6 +57,8 @@ public class KhachHangController extends HttpServlet {
 			thayDoiThongTin(request, response);			
 		}else if(hanhdong.equals("xac-thuc-tai-khoan")) {
 			xacThucTaiKhoan(request, response);			
+		}else if(hanhdong.equals("thay-doi-anh")) {
+			thayDoiAnh(request, response);			
 		}
 	}
 
@@ -298,6 +306,51 @@ public class KhachHangController extends HttpServlet {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void thayDoiAnh(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		Object obj = session.getAttribute("khachhang");
+		KhachHang khachHang = null;
+		
+		if (obj!=null){
+			khachHang = (KhachHang)obj;
+			if(khachHang!=null){
+				try {
+					String folder = getServletContext().getRealPath(getInitParameter("avatar"));
+					File file;
+					int maxFileSize = 5*1024*1024;
+					int maxMemSize =  5*1024*1024;
+					
+					String contentType = request.getContentType();
+					if(contentType.indexOf(contentType)>=0) {
+						DiskFileItemFactory factory = new DiskFileItemFactory();
+						//quy dinh dung luong cho 1 file
+						factory.setSizeThreshold(maxMemSize);
+						
+						//tạo file upload
+						ServletFileUpload upload = new ServletFileUpload(factory);
+						upload.setFileSizeMax(maxFileSize);
+						List<FileItem> files = upload.parseRequest(request);
+						for (FileItem fileItem : files) {
+							String fileName = System.currentTimeMillis() + fileItem.getName();
+							String path = folder + "\\" + fileName;
+							file = new File(path);
+
+							fileItem.write(file);
+
+							khachHang.setDuongDanAnh(fileName);
+							KhachHangDAO khd = new KhachHangDAO();
+							khd.update(khachHang);
+							khachHang = khd.selectById(khachHang);
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
 		}
 	}
 	

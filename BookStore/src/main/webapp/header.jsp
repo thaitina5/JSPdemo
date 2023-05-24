@@ -63,6 +63,7 @@ String url = request.getScheme() + "://" + request.getServerName() + ":" + reque
 						<ul class="dropdown-menu">
 							<li><a class="dropdown-item" href="#">Đơn hàng của tôi</a></li>
 							<li><a class="dropdown-item" href="#">Thông báo</a></li>
+							<li><a class="dropdown-item" href="<%=url%>/khachhang/thaydoianh.jsp">Thay đổi avatar</a></li>
 							<li><a class="dropdown-item" href="<%=url%>/khachhang/thaydoithongtin.jsp">Thay đổi thông tin</a></li>
 							<li><a class="dropdown-item" href="<%=url%>/khachhang/doimatkhau.jsp">Đổi mật khẩu</a></li>
 							<li class="dropdown-divider"></li>
